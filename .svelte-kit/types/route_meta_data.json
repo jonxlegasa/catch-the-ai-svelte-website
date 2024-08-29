@@ -1,0 +1,10 @@
+{
+	"/": [],
+	"/game": [],
+	"/game/match": [
+		"src/routes/game/match/+page.ts",
+		"src/routes/game/match/+page.server.ts"
+	],
+	"/leaderboard": [],
+	"/profile": []
+}
