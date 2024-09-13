@@ -2,18 +2,16 @@ import { redirect, error } from "@sveltejs/kit";
 import type { RequestEvent, Actions } from "./$types";
 
 
-
 export async function load(event: RequestEvent) {
   const { cookies } = event;
+  // Add any server-side logic here
 }
 
 export const actions: Actions = {
-  sendMessage: async ({ request }) => {
+  joinGame: async ({ request }) => {
     const data = await request.formData();
-    const message: string = data.get("messagebody") as string;
-    console.log(message);
-
-    return { success: true, message };
+    const username: string = data.get("username") as string;
+    return { success: true, username: username };
   }
 };
 

@@ -41,13 +41,14 @@ declare module '$env/static/private' {
 	export const CONDA_EXE: string;
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
-	export const npm_execpath: string;
 	export const TERM_FEATURES: string;
+	export const npm_execpath: string;
 	export const TMUX: string;
 	export const _CE_CONDA: string;
 	export const TERMINFO_DIRS: string;
 	export const PATH: string;
 	export const npm_package_json: string;
+	export const LaunchInstanceID: string;
 	export const __CFBundleIdentifier: string;
 	export const CONDA_PREFIX: string;
 	export const PWD: string;
@@ -59,8 +60,8 @@ declare module '$env/static/private' {
 	export const TMUX_PANE: string;
 	export const XPC_FLAGS: string;
 	export const npm_package_version: string;
-	export const _CE_M: string;
 	export const XPC_SERVICE_NAME: string;
+	export const _CE_M: string;
 	export const COLORFGBG: string;
 	export const SHLVL: string;
 	export const HOME: string;
@@ -74,8 +75,9 @@ declare module '$env/static/private' {
 	export const BUN_INSTALL: string;
 	export const npm_config_user_agent: string;
 	export const LC_TERMINAL: string;
-	export const npm_node_execpath: string;
+	export const SECURITYSESSIONID: string;
 	export const COLORTERM: string;
+	export const npm_node_execpath: string;
 	export const _: string;
 	export const NODE_ENV: string;
 }
@@ -124,13 +126,14 @@ declare module '$env/dynamic/private' {
 		CONDA_EXE: string;
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
-		npm_execpath: string;
 		TERM_FEATURES: string;
+		npm_execpath: string;
 		TMUX: string;
 		_CE_CONDA: string;
 		TERMINFO_DIRS: string;
 		PATH: string;
 		npm_package_json: string;
+		LaunchInstanceID: string;
 		__CFBundleIdentifier: string;
 		CONDA_PREFIX: string;
 		PWD: string;
@@ -142,8 +145,8 @@ declare module '$env/dynamic/private' {
 		TMUX_PANE: string;
 		XPC_FLAGS: string;
 		npm_package_version: string;
-		_CE_M: string;
 		XPC_SERVICE_NAME: string;
+		_CE_M: string;
 		COLORFGBG: string;
 		SHLVL: string;
 		HOME: string;
@@ -157,8 +160,9 @@ declare module '$env/dynamic/private' {
 		BUN_INSTALL: string;
 		npm_config_user_agent: string;
 		LC_TERMINAL: string;
-		npm_node_execpath: string;
+		SECURITYSESSIONID: string;
 		COLORTERM: string;
+		npm_node_execpath: string;
 		_: string;
 		NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;

@@ -1,8 +1,13 @@
-let socket: WebSocket | null = null;
+import { Message } from "$lib/models/socketio";
+import { addMessage, messagesStore } from "$lib/store/store";
+import { get } from 'svelte/store';
+
+let socket: WebSocket;
 
 export function initWebSocket() {
   if (!socket) {
-    socket = new WebSocket("ws://192.168.111.14:8000/ws");
+    // socket = new WebSocket("ws://192.168.111.14:8000/ws");
+    socket = new WebSocket("ws://127.0.0.1:8000/ws");
 
     socket.onopen = () => {
       console.log("WebSocket connected");
@@ -10,7 +15,13 @@ export function initWebSocket() {
 
     socket.onmessage = (event) => {
       console.log("Received message:", event.data);
-      // Handle incoming messages here
+      console.log("Data received from server", event.data);
+      console.log(event.data)
+      const messages: any = get(messagesStore);
+      console.log("This is the messages array BEFORE messages were received from the server", messages); // This will log the actual value of the store
+
+      addMessage(event.data);
+      console.log("This s the messages array AFTER the messages were received from the server", messages); // This will log the actual value of the store
     };
 
     socket.onerror = (error) => {
@@ -19,15 +30,19 @@ export function initWebSocket() {
 
     socket.onclose = () => {
       console.log("WebSocket disconnected");
-      socket = null;
     };
   }
 }
 
-export function sendWebSocketMessage(message: string) {
+export function sendWebSocketMessage(message: Message) {
   if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(message);
-  } else {
-    console.error("WebSocket is not connected");
+    try {
+      const messageString = JSON.stringify(message);
+      socket.send(messageString)
+      addMessage(message);
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
