@@ -4,7 +4,7 @@ export type Message = {
   username: string | null;
   status: 'Sent';
   message: string;
-  time: number;
+  time: string;
 };
 
 

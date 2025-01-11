@@ -19,6 +19,7 @@
     "@types/eslint": "^9.6.0",
     "@types/node": "^22.5.0",
     "@types/socket.io-client": "^3.0.0",
+    "@types/uuid": "^10.0.0",
     "@types/ws": "^8.5.12",
     "autoprefix": "latest",
     "axios": "^1.7.5",
@@ -40,6 +41,7 @@
   },
   "type": "module",
   "dependencies": {
-    "autoprefixer": "^10.4.20"
+    "autoprefixer": "^10.4.20",
+    "uuid": "^11.0.5"
   }
 }

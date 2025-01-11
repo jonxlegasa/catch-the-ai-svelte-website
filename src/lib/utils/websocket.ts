@@ -1,5 +1,5 @@
 import { Message } from "$lib/models/socketio";
-import { addMessage, messagesStore } from "$lib/store/store";
+import { addMessage, messagesStore, joined } from "$lib/store/store";
 import { get } from 'svelte/store';
 
 let socket: WebSocket;
@@ -7,9 +7,10 @@ let socket: WebSocket;
 export function initWebSocket() {
   if (!socket) {
     // socket = new WebSocket("ws://192.168.111.14:8000/ws");
-    socket = new WebSocket("ws://127.0.0.1:8000/ws");
+    socket = new WebSocket("ws://localhost:8080/ws");
 
     socket.onopen = () => {
+      joined.set(true);
       console.log("WebSocket connected");
     };
 
@@ -38,6 +39,7 @@ export function sendWebSocketMessage(message: Message) {
   if (socket && socket.readyState === WebSocket.OPEN) {
     try {
       const messageString = JSON.stringify(message);
+      console.log(messageString)
       socket.send(messageString)
       addMessage(message);
 

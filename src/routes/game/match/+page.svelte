@@ -1,11 +1,16 @@
 <script lang="ts">
 	import { initWebSocket, sendWebSocketMessage } from '$lib/utils/websocket';
-	import { messagesStore } from '$lib/store/store';
+	import { userModel, messagesStore, joined } from '$lib/store/store';
 	import { onMount } from 'svelte';
+
+	import { formatTime } from '$lib/utils/utils';
+
 	import type { Message } from '$lib/models/socketio';
 
 	onMount(() => {
 		initWebSocket();
+		let joinedVar: boolean = $joined;
+		console.log(joinedVar);
 	});
 
 	// Automatically subscribe to the store and reactively update `messages`
@@ -17,12 +22,14 @@
 		const form = event.target as HTMLFormElement;
 		const messageInput = form.querySelector('#message') as HTMLTextAreaElement;
 
+		let time: string = formatTime(new Date());
+
 		try {
 			let newMessage: Message = {
 				username: username,
 				status: 'Sent',
 				message: messageInput.value,
-				time: Date.now()
+				time: time
 			};
 
 			sendWebSocketMessage(newMessage);
@@ -33,6 +40,8 @@
 
 		console.log('the current messages: ', messages);
 	}
+
+	console.log($userModel);
 </script>
 
 <section class="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-800">
@@ -42,8 +51,12 @@
 		<!-- Chat Messages Container -->
 		<div class="flex-1 overflow-y-auto space-y-4 p-4">
 			<div class="flex-1 overflow-y-auto space-y-4 p-4">
+				{#if $joined}
+					<p class="text-center">{username} joined the chatroom</p>
+				{:else}{/if}
+
 				{#each $messagesStore as message, index}
-					<div class="chat chat-start">
+					<div class="chat chat-end">
 						<div class="chat-image avatar">
 							<div class="w-10 rounded-full">
 								<img alt="User Avatar" src="" />
@@ -51,8 +64,9 @@
 						</div>
 						<div class="chat-header text-gray-700 dark:text-gray-300">
 							{message.username}
-							<time class="text-xs opacity-50">{new Date(message.time).toLocaleTimeString()}</time>
+							<time class="text-xs opacity-50">{message.time}</time>
 						</div>
+						<!-- Chat bubble -->
 						<div class="chat-bubble bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
 							{message.message}
 						</div>

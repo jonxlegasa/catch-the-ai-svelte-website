@@ -1,10 +1,28 @@
 import { writable } from 'svelte/store';
 import { Message } from '$lib/models/socketio';
 
-// Create a writable store with an initial empty array of messages
-export const messagesStore = writable<Message[]>([]);
+import { User } from '$lib/models/User';
 
-// Function to add a new message to the store
+// keep track of user info
+
+export const userModel = writable<User>({
+  username: null,
+  rank: '',
+  entity: '',
+  senderId: '',
+});
+
+export const messagesStore = writable<Message[]>([]);
+// Maybe? Idk lol
+
+export const joined = writable(false);
+
+// update user info
+export function updateUser(newUserInfo: User) {
+  userModel.set(newUserInfo);
+}
+
+// update functions for messages
 export function addMessage(newMessage: Message) {
   messagesStore.update(messages => [...messages, newMessage]);
 }
@@ -16,3 +34,5 @@ export function removeLastMessage() {
     return updatedMessages;
   });
 }
+
+

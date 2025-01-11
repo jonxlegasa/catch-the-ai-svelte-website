@@ -1,27 +1,29 @@
 <script lang="ts">
-	import { sendWebSocketMessage } from '$lib/utils/websocket';
-	import type { Message } from '$lib/models/socketio';
+	import type { User } from '$lib/models/User';
+	import { updateUser, userModel } from '$lib/store/store';
 
 	import { goto } from '$app/navigation';
-	let inputValue: string = '';
+	import { v4 } from 'uuid';
 
-	async function handleSendUsername(event: Event): Promise<any> {
-		localStorage.setItem('username', inputValue);
-		const stringUsername: string | null = localStorage.getItem('username'); // Get the value from the store
+	const uuidV4: string = v4();
 
-		let userJoining: Message = {
-			username: stringUsername,
-			status: 'Sent',
-			message: `${stringUsername} connected`, // Use template literals for string interpolation
-			time: Date.now()
+	function handleSendUsername(event: Event) {
+		event.preventDefault();
+		let joinedUser: User = {
+			username: inputValue,
+			rank: 'player',
+			entity: 'human',
+			senderId: uuidV4
 		};
 
-		event.preventDefault(); // Prevent the default form submission
-		console.log(inputValue);
-		sendWebSocketMessage(userJoining);
+		updateUser(joinedUser);
 
 		goto('/game/match');
 	}
+
+	let inputValue: string = '';
+
+	console.log($userModel);
 </script>
 
 <section class="flex flex-col justify-center items-center min-h-screen p-4">
@@ -30,12 +32,7 @@
 		<h1 class="text-3xl font-light dark:text-white">
 			Think you have what it takes to catch an AI? &#129302;
 		</h1>
-		<form
-			on:submit={handleSendUsername}
-			class="flex flex-col items-center space-y-4 w-full"
-			method="POST"
-			action="?/joinGame"
-		>
+		<form on:submit={handleSendUsername} class="flex flex-col items-center space-y-4 w-full">
 			<input
 				type="text"
 				name="username"
