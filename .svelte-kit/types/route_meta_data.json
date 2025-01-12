@@ -8,5 +8,13 @@
 		"src/routes/game/match/+page.server.ts"
 	],
 	"/leaderboard": [],
-	"/profile": []
+	"/oauthcallback": [
+		"src/routes/oauthcallback/+page.server.ts",
+		"src/routes/oauthcallback/+layout.ts",
+		"src/routes/oauthcallback/+layout.ts"
+	],
+	"/profile": [],
+	"/signin": [
+		"src/routes/signin/+page.ts"
+	]
 }

@@ -1,5 +1,20 @@
 <script lang="ts">
 	import DarkModeToggle from './DarkModeToggle.svelte';
+	import { authStore } from '$lib/store/store';
+	import { AuthService } from '$lib/utils/custom-api-calls/authservice';
+
+	async function handleUserLogout(event: Event) {
+		event.preventDefault();
+		try {
+			console.log($authStore.authCode);
+			await AuthService.jwtLogout($authStore.authCode);
+			authStore.setIsLoggedIn(false);
+			authStore.setAuthCode('');
+			console.log($authStore.authCode);
+		} catch (error) {
+			console.error('Logout failed', error);
+		}
+	}
 </script>
 
 <section class="my-10">
@@ -126,6 +141,14 @@
 			</ul>
 		</div>
 		<div class="navbar-end gap-x-4">
+			{#if $authStore.isLoggedIn}
+				<button on:click|preventDefault={handleUserLogout} class="btn bg-black text-white"
+					>Sign Out</button
+				>
+			{:else}
+				<a href="/signin" class="btn bg-indigo-600 hover:bg-indigo-700 text-white">Sign In</a>
+			{/if}
+
 			<DarkModeToggle />
 		</div>
 	</div>
